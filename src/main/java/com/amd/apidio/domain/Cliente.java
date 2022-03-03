@@ -28,12 +28,21 @@ public class Cliente implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+
+	@Column(nullable = false)
 	private String nome;
+
+	@Column(nullable = false)
 	private String sobrenome;
+
     @Column(unique=true) /* Essa anotação do JPA não permite campos com mesmo conteúdo na tabela */
 	private String email;
+
+	@Column(nullable = false, unique = true)
 	private String cpfOuCnpj;
+
 	/* Internamente o TipoCliente vai ser armazenado como um tipo Inteiro mas quando exibido será como TipoCliente */
+	@Column(nullable = false)
 	private Integer tipo;
 	
 	/* Aqui o JSON protege a serialização ciclica, ou seja, o cliente pode serializar o endereço mas o endereço não pode serializar o cliente */

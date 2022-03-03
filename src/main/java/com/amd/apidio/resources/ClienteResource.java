@@ -39,7 +39,7 @@ public class ClienteResource {
 		return ResponseEntity.ok().body(obj);
 	}
 
-	/* Aqui está implementado um médoto para inserir um novo cliente no banco de dados */
+	/* Aqui está implementado um método para inserir um novo cliente no banco de dados */
 	@RequestMapping(method=RequestMethod.POST)
 	public ResponseEntity<Void> insert(@Valid @RequestBody ClienteNewDTO objDto) { /* Tem que validar com @Valid antes de converter */
 		/* Antes de chamar o insert tem que converter o objeto DTO para um objeto Entity */

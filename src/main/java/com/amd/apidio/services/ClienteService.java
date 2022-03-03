@@ -30,13 +30,6 @@ public class ClienteService {
 	private ClienteRepository repo;
 	@Autowired
 	private EnderecoRepository enderecoRepository;
-	
-	public Cliente find(Integer id) {		
-		/* Caso o id não exista essa exceção é recebida pela camada de resources REST */		
-		Optional<Cliente> obj = repo.findById(id);
-		return obj.orElseThrow(() -> new ObjectNotFoundException(
-				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));		
-	}
 
 	/* Esse método é utilizado no CategoriaResource para inserir uma categoria no banco de dados */
 	@Transactional
@@ -44,10 +37,16 @@ public class ClienteService {
 		obj.setId(null); /* é necessário informar o id nulo para o metodo save não pensar que é uma atualização e sim uma inserção */
 		obj = repo.save(obj);
 		enderecoRepository.saveAll(obj.getEnderecos());
-		return obj;	
+		return obj;
 	}
-	
-	
+
+	public Cliente find(Integer id) {
+		/* Caso o id não exista essa exceção é recebida pela camada de resources REST */
+		Optional<Cliente> obj = repo.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException(
+				"Objeto não encontrado! Id: " + id + ", Tipo: " + Cliente.class.getName()));
+	}
+
 	/* Esse método é utilizado no ClienteResource para atualizar uma categoria no banco de dados */
 	/* A diferença entre o método insert e o update é o Id. Quando ele é setado null o save insere e quanto ele não é null o save atualiza */
 	public Cliente update(Cliente obj) {
@@ -87,8 +86,9 @@ public class ClienteService {
 	}
 
 	/* Esse método é uma sobrecarga do Cliente fromDTO acima que é utilizado na classe ClienteNewDTO */
-	public Cliente fromDTO(ClienteNewDTO objDto) {
-		Cliente cli = new Cliente(null, objDto.getNome(), objDto.getSobrenome() , objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo())); /* O construtor do Cliente recebe um TipoCliente ai foi necessário converter o parâmetro para TipoCliente que é um inteiro */
+	public static Cliente fromDTO(ClienteNewDTO objDto) {
+		/* O construtor do Cliente recebe um TipoCliente ai foi necessário converter o parâmetro para TipoCliente que é um inteiro */
+		Cliente cli = new Cliente(null, objDto.getNome(), objDto.getSobrenome() , objDto.getEmail(), objDto.getCpfOuCnpj(), TipoCliente.toEnum(objDto.getTipo()));
 		/* Instanciado aqui um objeto persistente monitorado pelo JPA e vai ser associado ao endereco end */
 		Cidade cid = new Cidade(objDto.getCidadeId(), null, null);
 		Endereco end = new Endereco(null, objDto.getLogradouro(), objDto.getNumero(), objDto.getComplemento(), objDto.getBairro(), objDto.getCep(), cli, cid);
