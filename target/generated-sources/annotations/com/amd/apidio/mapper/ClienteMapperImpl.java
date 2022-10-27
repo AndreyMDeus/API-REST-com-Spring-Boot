@@ -6,7 +6,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2022-03-02T12:49:37-0300",
+    date = "2022-04-01T09:12:31-0300",
     comments = "version: 1.3.1.Final, compiler: javac, environment: Java 11.0.13 (Oracle Corporation)"
 )
 public class ClienteMapperImpl implements ClienteMapper {
