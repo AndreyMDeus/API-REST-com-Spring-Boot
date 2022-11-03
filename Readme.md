@@ -1,4 +1,4 @@
-# API REST com Spring Boot de Clientes
+# API RESTfull com Spring Boot de Clientes
 
 Esse projeto disponibiliza uma API de Clientes para:
 
@@ -15,5 +15,5 @@ A API pode ser configurada para utilizar:
 
 A API tem implementado o Swagger para documentação.
 
-1. O acesso ao Swagger é através da URL: https://localhost:8080/swagger-ui.html
+1. O acesso ao Swagger é através da URL: http://localhost:8081/swagger-ui.html#/
 
