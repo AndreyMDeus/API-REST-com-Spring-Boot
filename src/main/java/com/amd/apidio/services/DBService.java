@@ -4,18 +4,13 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 
+import com.amd.apidio.domain.*;
+import com.amd.apidio.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.amd.apidio.domain.Cidade;
-import com.amd.apidio.domain.Cliente;
-import com.amd.apidio.domain.Endereco;
-import com.amd.apidio.domain.Estado;
 import com.amd.apidio.domain.enums.TipoCliente;
-import com.amd.apidio.repositories.CidadeRepository;
-import com.amd.apidio.repositories.ClienteRepository;
-import com.amd.apidio.repositories.EnderecoRepository;
-import com.amd.apidio.repositories.EstadoRepository;
 
 @Service
 public class DBService {
@@ -29,11 +24,22 @@ public class DBService {
 	private ClienteRepository clienteRepository;
 	@Autowired
 	public EnderecoRepository enderecoRepository;
+	@Autowired
+	public UsuarioRepository usuarioRepository;
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 
 	public void instantiateTestDatabase() throws ParseException {
 		
-		/* Aqui está sendo populado o banco no incio da aplicação */
-		
+		/* Aqui está sendo populado o banco no inicio da aplicação */
+
+		/*Aqui é populada a tabela de usuários */
+		Usuario usu1 = new Usuario(null, "Andrey", "andrey",passwordEncoder.encode("abc123"));
+		usu1.getRoles().addAll(Arrays.asList("USERS","MANAGERS"));
+		Usuario usu2 = new Usuario(null, "Manézinho", "mane",passwordEncoder.encode("abc123"));
+		usu2.getRoles().addAll(Arrays.asList("USERS"));
+
+
 		/* Aqui é populada a tabela de estados */
 		Estado est1 = new Estado(null, "Minas Gerais");
 		Estado est2 = new Estado(null, "São Paulo");
@@ -69,6 +75,7 @@ public class DBService {
 		cidadeRepository.saveAll(Arrays.asList(c1, c2, c3));
 		clienteRepository.saveAll(Arrays.asList(cli1, cli2));
 		enderecoRepository.saveAll(Arrays.asList(e1, e2, e3));
+		usuarioRepository.saveAll(Arrays.asList(usu1, usu2));
 
 	}
 }
